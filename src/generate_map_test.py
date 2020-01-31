@@ -1,7 +1,7 @@
 from generate_map import get_maps
 
 
-def test_get_maps(mocker):
+def test_get_maps(mocker, make_wb_and_ws):
     return_value = [
         ('id', 'From', 'To'),
         (1, 'A', 'F'),
@@ -25,10 +25,7 @@ def test_get_maps(mocker):
             {'From': 'I', 'To': 'I'}
         ]
     }
-    from openpyxl import Workbook
-    wb = Workbook()
-    ws = wb.active
-    ws.title = 'Map'
+    wb, ws = make_wb_and_ws('Map')
     mocker.patch.object(ws, 'iter_rows', return_value=return_value)
     maps = get_maps(wb)
     assert maps == expect_value
