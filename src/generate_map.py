@@ -1,3 +1,5 @@
+from tools import make_dict_from_3cloumns
+
 def get_maps(wb):
     """获取映射关系
     从模板文件中的 'Map' sheet 工作表中提取映射关系，工作表中的映射关系结构：
@@ -11,18 +13,7 @@ def get_maps(wb):
     Returns:
         Dictionary: 映射关系字典
     """
-    ws = wb['Map']
-    maps = {}
-    rows = []
-    for row in ws.iter_rows(min_row=ws.min_row, max_row=ws.max_row,
-                            min_col=ws.min_column, max_col=ws.max_column,
-                            values_only=True):
-        rows.append(row)
-    for row in rows[1:]:
-        tmp1 = maps[row[0]] if row[0] in maps else []
-        tmp1.append({'From': row[1], 'To': row[2]})
-        maps[row[0]] = tmp1
-    return maps
+    return make_dict_from_3cloumns(wb, 'Map')
 
 
 if __name__ == "__main__":
