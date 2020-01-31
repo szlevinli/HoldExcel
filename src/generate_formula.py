@@ -1,4 +1,4 @@
-from tools import make_dict_from_3cloumns
+from tools import make_dict_repeatable
 
 
 def get_formulas(wb):
@@ -14,4 +14,9 @@ def get_formulas(wb):
     Returns:
         Dictionary: 单元格公式
     """
-    return make_dict_from_3cloumns(wb, 'Formula')
+    return make_dict_repeatable(wb, 'Formula')
+
+
+if __name__ == "__main__":
+    from tools import get_template
+    print(f'configs is {get_formulas(get_template())}')

@@ -1,4 +1,4 @@
-from tools import make_dict_from_3cloumns
+from tools import make_dict_repeatable
 
 def get_maps(wb):
     """获取映射关系
@@ -13,7 +13,7 @@ def get_maps(wb):
     Returns:
         Dictionary: 映射关系字典
     """
-    return make_dict_from_3cloumns(wb, 'Map')
+    return make_dict_repeatable(wb, 'Map')
 
 
 if __name__ == "__main__":
