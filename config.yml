@@ -1,0 +1,4 @@
+template_dir: template
+data_dir: data
+out_dir: out
+template_file_name: template.xlsx
