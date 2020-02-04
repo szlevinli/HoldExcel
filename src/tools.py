@@ -59,6 +59,19 @@ def get_data_file_full_path(file_name):
     return get_current_work_dir() / data_dir / file_name
 
 
+def get_out_file_full_path(file_name):
+    """输出文件全路径，包含文件名
+
+    Args:
+        file_name (string): 文件名称含扩展名
+
+    Returns:
+        Path: 输出文件全路径，包含文件名
+    """
+    out_dir = read_config_yaml()[GL.GL_CONFIG_YAML_KEY_OUT_DIR]
+    return get_current_work_dir() / out_dir / file_name
+
+
 def get_template():
     """返回模板文件
 

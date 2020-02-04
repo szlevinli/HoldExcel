@@ -5,6 +5,7 @@ from tools import (
     read_config_yaml,
     get_template_file_full_path,
     get_data_file_full_path,
+    get_out_file_full_path,
     get_template,
     make_dict_repeatable,
     make_dict_unrepeatable,
@@ -58,6 +59,20 @@ def test_get_data_file_full_path(mocker, make_yaml_config):
     file_name = 'test.xlsx'
     expect_value = Path(f'/test/test_data_dir/{file_name}')
     result_value = get_data_file_full_path(file_name)
+    assert result_value == expect_value
+    mock_read_config_yaml.assert_called_once()
+    mock_get_current_work_dir.assert_called_once()
+
+
+def test_get_out_file_full_path(mocker, make_yaml_config):
+    return_value = make_yaml_config
+    mock_read_config_yaml = mocker.patch('tools.read_config_yaml',
+                                         return_value=return_value)
+    mock_get_current_work_dir = mocker.patch('tools.get_current_work_dir',
+                                             return_value=Path('/test'))
+    file_name = 'test_out.xlsx'
+    expect_value = Path(f'/test/test_out_dir/{file_name}')
+    result_value = get_out_file_full_path(file_name)
     assert result_value == expect_value
     mock_read_config_yaml.assert_called_once()
     mock_get_current_work_dir.assert_called_once()
