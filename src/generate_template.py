@@ -3,6 +3,7 @@ from generate_data import get_data
 from generate_formula import get_formulas
 from generate_map import get_maps
 from tools import get_template
+import global_var as GL
 
 
 def make_template():
@@ -24,10 +25,10 @@ def make_template():
     formulas = get_formulas(wb)
     maps = get_maps(wb)
     return {
-        'configs': configs,
-        'datum': datum,
-        'formulas': formulas,
-        'maps': maps
+        GL.GL_TEMPLATE_KEY_CONFIGS_NAME: configs,
+        GL.GL_TEMPLATE_KEY_DATUM_NAME: datum,
+        GL.GL_TEMPLATE_KEY_FORMULAS_NAME: formulas,
+        GL.GL_TEMPLATE_KEY_MAPS_NAME: maps
     }
 
 
