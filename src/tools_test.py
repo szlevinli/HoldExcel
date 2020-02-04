@@ -1,8 +1,77 @@
+import pytest
+from pathlib import Path
+import global_var as GL
 from tools import (
+    read_config_yaml,
+    get_template_file_full_path,
+    get_data_file_full_path,
+    get_template,
     make_dict_repeatable,
     make_dict_unrepeatable,
     make_list
 )
+
+
+class TestReadConfigYaml:
+    def test_normal(self, mocker):
+        return_value = {'key', 'value'}
+        mock_is_file = mocker.patch('tools.Path.is_file', return_value=True)
+        mock_open = mocker.patch('builtins.open')
+        mock_load = mocker.patch('tools.yaml.load', return_value=return_value)
+        expect_value = return_value
+        result_value = read_config_yaml()
+        assert result_value == expect_value
+        mock_is_file.assert_called_once()
+        mock_open.assert_called_once()
+        mock_load.assert_called_once()
+
+    def test_except_file_not_found_error(self, mocker):
+        mock_is_file = mocker.patch('tools.Path.is_file', return_value=False)
+        mock_open = mocker.patch('builtins.open')
+        mock_load = mocker.patch('tools.yaml.load')
+        with pytest.raises(FileNotFoundError):
+            read_config_yaml()
+        mock_is_file.assert_called_once()
+        assert not mock_open.called
+        assert not mock_load.called
+
+
+def test_get_template_file_full_path(mocker, make_yaml_config):
+    return_value = make_yaml_config
+    mock_read_config_yaml = mocker.patch('tools.read_config_yaml',
+                                         return_value=return_value)
+    mock_get_current_work_dir = mocker.patch('tools.get_current_work_dir',
+                                             return_value=Path('/test'))
+    expect_value = Path('/test/test_template_dir/test_template_file_name')
+    result_value = get_template_file_full_path()
+    assert result_value == expect_value
+    mock_read_config_yaml.assert_called_once()
+    mock_get_current_work_dir.assert_called_once()
+
+
+def test_get_data_file_full_path(mocker, make_yaml_config):
+    return_value = make_yaml_config
+    mock_read_config_yaml = mocker.patch('tools.read_config_yaml',
+                                         return_value=return_value)
+    mock_get_current_work_dir = mocker.patch('tools.get_current_work_dir',
+                                             return_value=Path('/test'))
+    file_name = 'test.xlsx'
+    expect_value = Path(f'/test/test_data_dir/{file_name}')
+    result_value = get_data_file_full_path(file_name)
+    assert result_value == expect_value
+    mock_read_config_yaml.assert_called_once()
+    mock_get_current_work_dir.assert_called_once()
+
+
+def test_get_template(mocker):
+    mock_load_workbook = mocker.patch('tools.load_workbook')
+    mock_get_template_file_full_path = mocker.patch(
+        'tools.get_template_file_full_path',
+        return_value='/template_file_full_path')
+    get_template()
+    mock_load_workbook.assert_called_once_with(
+        '/template_file_full_path', read_only=True)
+    mock_get_template_file_full_path.assert_called_once()
 
 
 def test_make_dict_repeatable(mocker, make_wb_and_ws):
