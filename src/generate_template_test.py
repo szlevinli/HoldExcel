@@ -2,7 +2,10 @@ from generate_template import make_template
 
 
 def test_make_template(mocker):
-    wb = object()
+    class MockClass:
+        def close():
+            pass
+    wb = MockClass()
     mock_get_template = mocker.patch(
         'generate_template.get_template',
         return_value=wb)
@@ -14,6 +17,7 @@ def test_make_template(mocker):
         'generate_template.get_formulas', return_value=300)
     mock_get_maps = mocker.patch(
         'generate_template.get_maps', return_value=400)
+    mock_close = mocker.patch.object(wb, 'close')
     t = make_template()
     expect_value = {
         'configs': 100,
@@ -26,4 +30,5 @@ def test_make_template(mocker):
     mock_get_data.assert_called_once_with(wb)
     mock_get_formulas.assert_called_once_with(wb)
     mock_get_maps.assert_called_once_with(wb)
+    mock_close.assert_called_once()
     assert t == expect_value

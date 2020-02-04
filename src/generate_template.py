@@ -19,11 +19,14 @@ def make_template():
     Returns:
         Dictionary: 集成的模板数据
     """
-    wb = get_template()
-    configs = get_configs(wb)
-    datum = get_data(wb)
-    formulas = get_formulas(wb)
-    maps = get_maps(wb)
+    try:
+        wb = get_template()
+        configs = get_configs(wb)
+        datum = get_data(wb)
+        formulas = get_formulas(wb)
+        maps = get_maps(wb)
+    finally:
+        wb.close()
     return {
         GL.GL_TEMPLATE_KEY_CONFIGS_NAME: configs,
         GL.GL_TEMPLATE_KEY_DATUM_NAME: datum,
