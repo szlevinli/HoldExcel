@@ -5,6 +5,7 @@
     - [字典可重模式](#%e5%ad%97%e5%85%b8%e5%8f%af%e9%87%8d%e6%a8%a1%e5%bc%8f)
     - [字典不可重模式](#%e5%ad%97%e5%85%b8%e4%b8%8d%e5%8f%af%e9%87%8d%e6%a8%a1%e5%bc%8f)
     - [列表模式](#%e5%88%97%e8%a1%a8%e6%a8%a1%e5%bc%8f)
+  - [关于 Hard Code](#%e5%85%b3%e4%ba%8e-hard-code)
 
 学习使用 `openpyxl` 包操作 `excel` 文件。
 
@@ -104,3 +105,9 @@
     },
 ]
 ```
+
+## 关于 Hard Code
+
+为了避免出现 Hard Code 问题，将涉及用户可能修改的配置数据放置在 `config.yml` 配置文件中，系统内部需要使用的配置数据放置在 `global_var.py` 文件中。
+
+整个系统中允许在 `global_var.py` 文件中写入 Hard Code。
