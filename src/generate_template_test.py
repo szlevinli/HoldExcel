@@ -1,11 +1,11 @@
+from unittest.mock import Mock
 from generate_template import make_template
 
 
 def test_make_template(mocker):
-    class MockClass:
-        def close():
-            pass
-    wb = MockClass()
+    wb = Mock()
+    attr = {'close.return_value': 0}
+    wb.configure_mock(**attr)
     mock_get_template = mocker.patch(
         'generate_template.get_template',
         return_value=wb)
