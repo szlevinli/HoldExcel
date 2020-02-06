@@ -1,4 +1,5 @@
 from tools import make_list
+import global_var as GL
 
 
 def get_data(wb):
@@ -15,7 +16,7 @@ def get_data(wb):
     Returns:
         Directory: 数据信息
     """
-    return make_list(wb, 'Data')
+    return make_list(wb, GL.GL_EXECEL_SHEET_DATA_NAME)
 
 
 if __name__ == "__main__":
