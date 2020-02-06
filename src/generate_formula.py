@@ -1,4 +1,5 @@
 from tools import make_dict_repeatable
+import global_var as GL
 
 
 def get_formulas(wb):
@@ -14,7 +15,7 @@ def get_formulas(wb):
     Returns:
         Dictionary: 单元格公式
     """
-    return make_dict_repeatable(wb, 'Formula')
+    return make_dict_repeatable(wb, GL.GL_EXECEL_SHEET_FORMULA_NAME)
 
 
 if __name__ == "__main__":
