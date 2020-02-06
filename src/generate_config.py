@@ -1,4 +1,5 @@
 from tools import make_dict_unrepeatable
+import global_var as GL
 
 
 def get_configs(wb):
@@ -12,7 +13,7 @@ def get_configs(wb):
     Returns:
         Directory: 配置信息
     """
-    return make_dict_unrepeatable(wb, 'Config')
+    return make_dict_unrepeatable(wb, GL.GL_EXECEL_SHEET_CONFIG_NAME)
 
 
 if __name__ == "__main__":
